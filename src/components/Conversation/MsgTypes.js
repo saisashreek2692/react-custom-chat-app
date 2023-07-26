@@ -7,8 +7,11 @@ import {
   useTheme,
   Link,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import { DownloadSimple, Image } from "phosphor-react";
+import { DotsThreeVertical, DownloadSimple, Image } from "phosphor-react";
+import { Message_options } from "../../data/index";
 
 const DocMsg = ({ el }) => {
   const theme = useTheme();
@@ -31,7 +34,7 @@ const DocMsg = ({ el }) => {
             spacing={3}
             alignItems="center"
             sx={{
-              backgroundColor: theme.palette.background.paper,
+              backgroundColor: theme.palette.background.default,
               borderRadius: 1,
             }}>
             <Image size={48} />
@@ -42,11 +45,12 @@ const DocMsg = ({ el }) => {
           </Stack>
           <Typography
             variant="body2"
-            sx={{ color: el.incoming ? theme.palette.text : "#FFF" }}>
+            sx={{ color: el.incoming ? theme.palette.text : "#F0F4FA" }}>
             {el.message}
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -91,12 +95,13 @@ const LinkMsg = ({ el }) => {
             </Stack>
             <Typography
               variant="body2"
-              color={el.incoming ? theme.palette.text : "#FFF"}>
+              color={el.incoming ? theme.palette.text : "#F0F4FA"}>
               {el.message}
             </Typography>
           </Stack>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -130,11 +135,12 @@ const ReplyMsg = ({ el }) => {
           </Stack>
           <Typography
             variant="body2"
-            color={el.incoming ? theme.palette.text : "#fff"}>
+            color={el.incoming ? theme.palette.text : "#F0F4FA"}>
             {el.reply}
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -161,11 +167,12 @@ const MediaMsg = ({ el }) => {
           />
           <Typography
             variant="body2"
-            color={el.incoming ? theme.palette.text : "#fff"}>
+            color={el.incoming ? theme.palette.text : "#F0F4FA"}>
             {el.message}
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -190,6 +197,7 @@ const TextMsg = ({ el }) => {
           {el.message}
         </Typography>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 };
@@ -204,6 +212,44 @@ const Timeline = ({ el }) => {
       </Typography>
       <Divider width="46%" />
     </Stack>
+  );
+};
+
+const MessageOptions = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <DotsThreeVertical
+        size={20}
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}>
+        <Stack spacing={1} px={1.5}>
+          {Message_options.map((el) => (
+            <MenuItem onClick={handleClick}>{el.title}</MenuItem>
+          ))}
+        </Stack>
+      </Menu>
+    </>
   );
 };
 

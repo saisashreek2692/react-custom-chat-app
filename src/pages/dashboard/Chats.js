@@ -55,7 +55,7 @@ const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
         borderRadius: 1,
         backgroundColor:
           theme.palette.mode === "light"
-            ? "#FFF"
+            ? "#F0F4FA"
             : theme.palette.background.default,
       }}
       p={2}>
