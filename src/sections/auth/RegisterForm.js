@@ -3,22 +3,21 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, RHFTextField } from "../../components/hook-form/index";
-import { Link as RouterLink } from "react-router-dom";
 import { async } from "emoji-mart";
 import {
   Alert,
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
 } from "@mui/material";
 import { Eye, EyeSlash } from "phosphor-react";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const LoginSchema = Yup.object().shape({
+  const RegisterSchema = Yup.object().shape({
+    name: Yup.string().required("User Full Name Required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -31,7 +30,7 @@ const LoginForm = () => {
   };
 
   const methods = useForm({
-    resolver: yupResolver(LoginForm),
+    resolver: yupResolver(RegisterForm),
     defaultValues,
   });
 
@@ -62,6 +61,7 @@ const LoginForm = () => {
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
+        <RHFTextField name="name" label="Full Name" />
         <RHFTextField name="email" label="Email Address" />
         <RHFTextField
           name="password"
@@ -81,16 +81,7 @@ const LoginForm = () => {
           }}
         />
       </Stack>
-      <Stack alignItems={"flex-end"} sx={{ my: 2 }}>
-        <Link
-          to="/auth/forgot/"
-          variant="body-2"
-          color="inherit"
-          underline="always"
-          component={RouterLink}>
-          Forgot Password?
-        </Link>
-      </Stack>
+      <Stack alignItems={"flex-end"} sx={{ my: 2 }}></Stack>
       <Button
         fullWidth
         color="inherit"
@@ -107,10 +98,10 @@ const LoginForm = () => {
               theme.palette.mode === "light" ? "common.white" : "grey.800",
           },
         }}>
-        Login
+        Register
       </Button>
     </FormProvider>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

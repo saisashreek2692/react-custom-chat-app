@@ -3,35 +3,28 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, RHFTextField } from "../../components/hook-form/index";
-import { Link as RouterLink } from "react-router-dom";
 import { async } from "emoji-mart";
 import {
   Alert,
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
 } from "@mui/material";
-import { Eye, EyeSlash } from "phosphor-react";
 
-const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const LoginSchema = Yup.object().shape({
+const ForgotPasswordForm = () => {
+  const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is required"),
   });
 
   const defaultValues = {
     email: "demo@chattree.com",
-    password: "demo1234",
   };
 
   const methods = useForm({
-    resolver: yupResolver(LoginForm),
+    resolver: yupResolver(ForgotPasswordForm),
     defaultValues,
   });
 
@@ -63,34 +56,8 @@ const LoginForm = () => {
         )}
 
         <RHFTextField name="email" label="Email Address" />
-        <RHFTextField
-          name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment>
-                <IconButton
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}>
-                  {showPassword ? <Eye /> : <EyeSlash />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
       </Stack>
-      <Stack alignItems={"flex-end"} sx={{ my: 2 }}>
-        <Link
-          to="/auth/forgot/"
-          variant="body-2"
-          color="inherit"
-          underline="always"
-          component={RouterLink}>
-          Forgot Password?
-        </Link>
-      </Stack>
+      <Stack alignItems={"flex-end"} sx={{ my: 2 }}></Stack>
       <Button
         fullWidth
         color="inherit"
@@ -107,10 +74,10 @@ const LoginForm = () => {
               theme.palette.mode === "light" ? "common.white" : "grey.800",
           },
         }}>
-        Login
+        Retrive Password?
       </Button>
     </FormProvider>
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

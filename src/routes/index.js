@@ -8,6 +8,7 @@ import MainLayout from "../layouts/main";
 // config
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
+import { element } from "prop-types";
 
 const Loadable = (Component) => (props) => {
   return (
@@ -22,7 +23,11 @@ export default function Router() {
     {
       path: "/auth",
       element: <MainLayout />,
-      children: [{ element: <LoginPage />, path: "login" }],
+      children: [
+        { element: <LoginPage />, path: "login" },
+        { element: <RegisterPage />, path: "register" },
+        { element: <ForgotPasswordPage />, path: "forgot" },
+      ],
     },
     {
       path: "/",
@@ -44,6 +49,10 @@ const GeneralApp = Loadable(
   lazy(() => import("../pages/dashboard/GeneralApp"))
 );
 const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
+const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
+const ForgotPasswordPage = Loadable(
+  lazy(() => import("../pages/auth/ForgotPassword"))
+);
 const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
 const GroupPage = Loadable(lazy(() => import("../pages/dashboard/Group")));
